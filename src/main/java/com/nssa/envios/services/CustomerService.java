@@ -6,7 +6,7 @@ package com.nssa.envios.services;
 
 import com.nssa.envios.entities.CustomerEntity;
 import com.nssa.envios.repositories.CustomerRepository;
-import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +20,7 @@ public class CustomerService {
     @Autowired
     private CustomerRepository clientRepository;
 
-    public List<CustomerEntity> getAll() {
-        return clientRepository.findAll();
+   public Optional<CustomerEntity> getById(Long id) {
+        return clientRepository.findById(id);
     }
 }

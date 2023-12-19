@@ -5,8 +5,8 @@
 package com.nssa.envios.controller;
 
 import com.nssa.envios.entities.CustomerEntity;
-import com.nssa.envios.services.CustomerService;
-import java.util.List;
+import com.nssa.envios.entities.ProductEntity;
+import com.nssa.envios.services.ProductService;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,21 +16,27 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+/**
+ *
+ * @author GACUNA
+ */
 @Controller
-@RequestMapping("/customers") 
-public class CustomerController {
+@RequestMapping("/products")
+public class ProductController {
+  
     
-    @Autowired
-    private CustomerService customerService;
+      @Autowired
+    private ProductService productService;
        
     @GetMapping("/{id}")
-    public ResponseEntity<CustomerEntity> getById(@PathVariable Long id) {
-        Optional<CustomerEntity> customer = customerService.getById(id);
+    public ResponseEntity<ProductEntity> getById(@PathVariable Long id) {
+        Optional<ProductEntity>product = productService.getById(id);
 
-        if (customer.isPresent()) {
-            return new ResponseEntity<>(customer.get(), HttpStatus.OK);
+        if (product.isPresent()) {
+            return new ResponseEntity<>(product.get(), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    
 }

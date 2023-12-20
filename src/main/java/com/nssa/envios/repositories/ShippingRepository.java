@@ -14,13 +14,13 @@ import org.springframework.stereotype.Repository;
  * @author GACUNA
  */
 @Repository
-public interface ShippingRepository extends JpaRepository<ShippingEntity, Long> {
+public interface ShippingRepository extends JpaRepository<ShippingEntity, Integer> {
     
-    Optional<ShippingEntity> findById(Long id);
+    Optional<ShippingEntity> findById(int id);
     @Modifying
     @Transactional
     @Query(nativeQuery = true, value ="UPDATE shipping  SET state = :newFieldValue WHERE id = :entityId")
-    int updateFieldNameById(@Param("newFieldValue") String newFieldValue, @Param("entityId") Long entityId);
+    int updateFieldNameById(@Param("newFieldValue") String newFieldValue, @Param("entityId") int entityId);
     
     
 }

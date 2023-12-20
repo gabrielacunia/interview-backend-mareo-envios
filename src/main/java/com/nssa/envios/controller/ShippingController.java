@@ -30,7 +30,7 @@ public class ShippingController {
     private ShippingService shippingService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<ShippingEntity> getById(@PathVariable Long id) {
+    public ResponseEntity<ShippingEntity> getById(@PathVariable int id) {
         Optional<ShippingEntity> shipping = shippingService.getById(id);
 
         if (shipping.isPresent()) {
@@ -40,16 +40,16 @@ public class ShippingController {
         }
     }
 
-    @PatchMapping("/shippings/patch/{id}")
-    public ResponseEntity<String> updateField(@PathVariable Long entityId, @RequestBody FieldRequest request) {
+    @PatchMapping("/{id}")
+    public ResponseEntity<String> updateField(@PathVariable int id, @RequestBody FieldRequest request) {
         try {
-            String currentState = shippingService.getById(entityId).get().getState();
+            String currentState = shippingService.getById(id).get().getState();
 
             if ((currentState.equalsIgnoreCase("Inicial") && (request.getNewFieldValue().equalsIgnoreCase("cancelado") || request.getNewFieldValue().equalsIgnoreCase("Entregado al correo")))
                     || (currentState.equalsIgnoreCase("Entregado al correo") && (request.getNewFieldValue().equalsIgnoreCase("cancelado") || request.getNewFieldValue().equalsIgnoreCase("En camino")))
                     || (currentState.equalsIgnoreCase("En camino") && request.getNewFieldValue().equalsIgnoreCase("Entregado"))) {
 
-                shippingService.updateFieldName(entityId, request.getNewFieldValue());
+                shippingService.updateFieldName(id, request.getNewFieldValue());
                 return ResponseEntity.ok("Campo actualizado exitosamente");
             } else {
                 return ResponseEntity.badRequest().body("Operación no permitida para el estado actual: " + currentState);
@@ -57,6 +57,7 @@ public class ShippingController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error al actualizar el campo: " + e.getMessage());
         }
-    }
+           
 
+}
 }

@@ -1,7 +1,11 @@
 package com.nssa.envios.entities;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.util.Date;
 
@@ -10,8 +14,11 @@ import java.util.Date;
 public class ShippingEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int customer_id;
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private CustomerEntity customer_id;
     private String state;
     private Date send_date;
     private Date arrive_date;
@@ -28,11 +35,11 @@ public class ShippingEntity {
         this.id = id;
     }
 
-    public int getCustomer_id() {
+    public CustomerEntity getCustomer_id() {
         return customer_id;
     }
 
-    public void setCustomer_id(int customer_id) {
+    public void setCustomer_id(CustomerEntity customer_id) {
         this.customer_id = customer_id;
     }
 

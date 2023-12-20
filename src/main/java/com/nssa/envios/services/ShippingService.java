@@ -18,4 +18,9 @@ public class ShippingService {
     public Optional<ShippingEntity> getById(Long id) {
         return shippingRepository.findById(id);
     }
+    
+
+    public void updateFieldName(Long entityId, String newFieldValue) {
+        shippingRepository.updateFieldNameById(newFieldValue, entityId);
+    }
 }

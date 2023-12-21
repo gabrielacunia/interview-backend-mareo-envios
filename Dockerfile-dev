@@ -1,0 +1,15 @@
+# Usar una imagen base con Maven y JDK
+FROM maven:3.8.5-openjdk-17
+
+# Directorio de trabajo en el contenedor
+WORKDIR /app
+
+# Copiar el código fuente y archivos de configuración de Maven al contenedor
+COPY src /app/src
+COPY pom.xml /app
+
+# Opcional: Descargar dependencias para aprovechar la caché de Docker
+RUN mvn dependency:go-offline
+
+# Comando para ejecutar la aplicación
+CMD ["mvn", "spring-boot:run"]

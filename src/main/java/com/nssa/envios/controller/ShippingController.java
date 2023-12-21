@@ -4,7 +4,7 @@
  */
 package com.nssa.envios.controller;
 
-import com.nssa.envios.FieldRequest;
+import com.nssa.envios.ShippingPathDTO;
 import com.nssa.envios.entities.ShippingEntity;
 import com.nssa.envios.services.ShippingService;
 import java.util.Optional;
@@ -41,15 +41,16 @@ public class ShippingController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<String> updateField(@PathVariable int id, @RequestBody FieldRequest request) {
+    public ResponseEntity<String> updateField(@PathVariable int id, @RequestBody ShippingPathDTO body) {
+      
         try {
             String currentState = shippingService.getById(id).get().getState();
+           
 
-            if ((currentState.equalsIgnoreCase("Inicial") && (request.getNewFieldValue().equalsIgnoreCase("cancelado") || request.getNewFieldValue().equalsIgnoreCase("Entregado al correo")))
-                    || (currentState.equalsIgnoreCase("Entregado al correo") && (request.getNewFieldValue().equalsIgnoreCase("cancelado") || request.getNewFieldValue().equalsIgnoreCase("En camino")))
-                    || (currentState.equalsIgnoreCase("En camino") && request.getNewFieldValue().equalsIgnoreCase("Entregado"))) {
-
-                shippingService.updateFieldName(id, request.getNewFieldValue());
+            if ((currentState.equalsIgnoreCase("Inicial") && (body.getTransition().equalsIgnoreCase("cancelado") || body.getTransition().equalsIgnoreCase("Entregado al correo")))
+                    || (currentState.equalsIgnoreCase("Entregado al correo") && (body.getTransition().equalsIgnoreCase("cancelado") || body.getTransition().equalsIgnoreCase("En camino")))
+                    || (currentState.equalsIgnoreCase("En camino") && body.getTransition().equalsIgnoreCase("Entregado"))) {
+                shippingService.updateState(id, body.getTransition());       
                 return ResponseEntity.ok("Campo actualizado exitosamente");
             } else {
                 return ResponseEntity.badRequest().body("Operación no permitida para el estado actual: " + currentState);

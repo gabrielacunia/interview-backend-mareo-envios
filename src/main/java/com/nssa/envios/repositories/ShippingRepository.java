@@ -20,7 +20,7 @@ public interface ShippingRepository extends JpaRepository<ShippingEntity, Intege
     @Modifying
     @Transactional
     @Query(nativeQuery = true, value ="UPDATE shipping  SET state = :newFieldValue WHERE id = :entityId")
-    int updateFieldNameById(@Param("newFieldValue") String newFieldValue, @Param("entityId") int entityId);
+    int updateStateById(@Param("newFieldValue") String newFieldValue, @Param("entityId") int entityId);
     
     
 }

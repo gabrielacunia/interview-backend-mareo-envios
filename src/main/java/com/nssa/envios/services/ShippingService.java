@@ -15,12 +15,13 @@ public class ShippingService {
     
     @Autowired
     private ShippingRepository shippingRepository; 
+    
     public Optional<ShippingEntity> getById(int id) {
         return shippingRepository.findById(id);
     }
     
 
-    public void updateFieldName(int entityId, String newFieldValue) {
-        shippingRepository.updateFieldNameById(newFieldValue, entityId);
+    public void updateState(int entityId, String newState) {
+        shippingRepository.updateStateById(newState, entityId);
     }
 }
